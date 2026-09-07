@@ -510,8 +510,7 @@
 </div>
 
 <script>
-const CORS_PROXY = 'https://corsproxy.io/?url=';
-const FPL_BASE = 'https://fantasy.premierleague.com/api';
+const FPL_BASE = 'https://fplproxy.hfj4rnnt7g.workers.dev/api';
 
 // --- State ---
 let leagueId = null;
@@ -598,7 +597,7 @@ function showSetupError(msg) {
 
 // --- API Helpers ---
 async function fetchJSON(url) {
-  const res = await fetch(CORS_PROXY + encodeURIComponent(url));
+  const res = await fetch(url);
   if (!res.ok) throw new Error(`API error ${res.status} for ${url}`);
   return res.json();
 }
