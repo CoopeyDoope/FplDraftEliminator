@@ -510,7 +510,12 @@
 </div>
 
 <script>
-const FPL_BASE = 'https://fplproxy.hfj4rnnt7g.workers.dev/api';
+// Proxy options — tries your Worker first, falls back to corsproxy.io
+const PROXIES = [
+  { name: 'Custom Worker', base: 'https://fplproxy.hfj4rnnt7g.workers.dev/api' },
+  { name: 'corsproxy.io', base: 'CORSPROXY' },
+];
+let FPL_BASE = '';
 
 // --- State ---
 let leagueId = null;
@@ -556,9 +561,14 @@ async function loadLeague() {
     // Update URL
     window.history.replaceState({}, '', `?leagueId=${leagueId}`);
 
+    // 0. Find a working proxy
+    setLoadingMsg('Connecting to FPL…');
+    const proxyOK = await detectProxy();
+    if (!proxyOK) throw new Error('Could not reach the FPL API through any proxy.');
+
     // 1. Bootstrap
     setLoadingMsg('Fetching FPL season data…');
-    bootstrapData = await fetchJSON(`${FPL_BASE}/bootstrap-static/`);
+    bootstrapData = await fetchJSON('/bootstrap-static/');
     const events = bootstrapData.events;
     completedGWs = events.filter(e => e.finished).map(e => e.id);
     const currentEvent = events.find(e => e.is_current);
@@ -596,10 +606,40 @@ function showSetupError(msg) {
 }
 
 // --- API Helpers ---
-async function fetchJSON(url) {
-  const res = await fetch(url);
-  if (!res.ok) throw new Error(`API error ${res.status} for ${url}`);
+function buildURL(path) {
+  if (FPL_BASE === 'CORSPROXY') {
+    return 'https://corsproxy.io/?' + encodeURIComponent('https://fantasy.premierleague.com/api' + path);
+  }
+  return FPL_BASE + path;
+}
+
+async function fetchJSON(path) {
+  const url = buildURL(path);
+  let res;
+  try {
+    res = await fetch(url);
+  } catch (e) {
+    throw new Error(`Network error fetching ${path} — ${e.message}`);
+  }
+  if (!res.ok) throw new Error(`HTTP ${res.status} on ${path}`);
   return res.json();
+}
+
+async function detectProxy() {
+  for (const proxy of PROXIES) {
+    FPL_BASE = proxy.base;
+    try {
+      const testURL = buildURL('/bootstrap-static/');
+      const res = await fetch(testURL);
+      if (res.ok) {
+        console.log(`Using proxy: ${proxy.name}`);
+        return true;
+      }
+    } catch (e) {
+      console.warn(`Proxy ${proxy.name} failed: ${e.message}`);
+    }
+  }
+  return false;
 }
 
 async function fetchAllLeagueManagers(leagueId) {
@@ -607,7 +647,7 @@ async function fetchAllLeagueManagers(leagueId) {
   let all = [];
   let leagueName = '';
   while (true) {
-    const data = await fetchJSON(`${FPL_BASE}/leagues-classic/${leagueId}/standings/?page_standings=${page}`);
+    const data = await fetchJSON(`/leagues-classic/${leagueId}/standings/?page_standings=${page}`);
     if (page === 1) leagueName = data.league.name;
     const results = data.standings.results;
     all = all.concat(results.map(r => ({
@@ -630,7 +670,7 @@ async function fetchAllHistories(managers) {
   for (let i = 0; i < managers.length; i += batchSize) {
     const batch = managers.slice(i, i + batchSize);
     const promises = batch.map(m =>
-      fetchJSON(`${FPL_BASE}/entry/${m.id}/history/`)
+      fetchJSON(`/entry/${m.id}/history/`)
         .then(data => { managerHistories[m.id] = data; })
     );
     await Promise.all(promises);
