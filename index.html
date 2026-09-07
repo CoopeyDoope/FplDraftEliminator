@@ -511,11 +511,12 @@
 
 <script>
 // Proxy options — tries your Worker first, falls back to corsproxy.io
+const FPL_API = 'https://fantasy.premierleague.com/api';
 const PROXIES = [
-  { name: 'Custom Worker', base: 'https://fplproxy.hfj4rnnt7g.workers.dev/api' },
-  { name: 'corsproxy.io', base: 'CORSPROXY' },
+  { name: 'Custom Worker', build: (path) => 'https://fplproxy.hfj4rnnt7g.workers.dev/' + FPL_API + path },
+  { name: 'corsproxy.io', build: (path) => 'https://corsproxy.io/?' + encodeURIComponent(FPL_API + path) },
 ];
-let FPL_BASE = '';
+let activeProxy = null;
 
 // --- State ---
 let leagueId = null;
@@ -561,11 +562,6 @@ async function loadLeague() {
     // Update URL
     window.history.replaceState({}, '', `?leagueId=${leagueId}`);
 
-    // 0. Find a working proxy
-    setLoadingMsg('Connecting to FPL…');
-    const proxyOK = await detectProxy();
-    if (!proxyOK) throw new Error('Could not reach the FPL API through any proxy.');
-
     // 1. Bootstrap
     setLoadingMsg('Fetching FPL season data…');
     bootstrapData = await fetchJSON('/bootstrap-static/');
@@ -606,40 +602,20 @@ function showSetupError(msg) {
 }
 
 // --- API Helpers ---
-function buildURL(path) {
-  if (FPL_BASE === 'CORSPROXY') {
-    return 'https://corsproxy.io/?' + encodeURIComponent('https://fantasy.premierleague.com/api' + path);
-  }
-  return FPL_BASE + path;
-}
-
 async function fetchJSON(path) {
-  const url = buildURL(path);
-  let res;
-  try {
-    res = await fetch(url);
-  } catch (e) {
-    throw new Error(`Network error fetching ${path} — ${e.message}`);
-  }
-  if (!res.ok) throw new Error(`HTTP ${res.status} on ${path}`);
-  return res.json();
-}
-
-async function detectProxy() {
-  for (const proxy of PROXIES) {
-    FPL_BASE = proxy.base;
+  if (activeProxy !== null) {
     try {
-      const testURL = buildURL('/bootstrap-static/');
-      const res = await fetch(testURL);
-      if (res.ok) {
-        console.log(`Using proxy: ${proxy.name}`);
-        return true;
-      }
-    } catch (e) {
-      console.warn(`Proxy ${proxy.name} failed: ${e.message}`);
-    }
+      const res = await fetch(PROXIES[activeProxy].build(path));
+      if (res.ok) return res.json();
+    } catch (e) { activeProxy = null; }
   }
-  return false;
+  for (let i = 0; i < PROXIES.length; i++) {
+    try {
+      const res = await fetch(PROXIES[i].build(path));
+      if (res.ok) { activeProxy = i; console.log('Using proxy: ' + PROXIES[i].name); return res.json(); }
+    } catch (e) { continue; }
+  }
+  throw new Error('All proxies failed for ' + path);
 }
 
 async function fetchAllLeagueManagers(leagueId) {
