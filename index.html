@@ -41,414 +41,147 @@
 
   .mono { font-family: 'JetBrains Mono', monospace; }
 
-  /* --- Layout --- */
-  .container {
-    max-width: 960px;
-    margin: 0 auto;
-    padding: 0 20px;
-  }
+  .container { max-width: 960px; margin: 0 auto; padding: 0 20px; }
 
   /* --- Setup Screen --- */
   .setup {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    min-height: 100vh;
-    text-align: center;
-    gap: 32px;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    min-height: 100vh; text-align: center; gap: 32px;
   }
-
-  .setup h1 {
-    font-size: 2.4rem;
-    font-weight: 700;
-    letter-spacing: -0.03em;
-    line-height: 1.1;
-  }
-
+  .setup h1 { font-size: 2.4rem; font-weight: 700; letter-spacing: -0.03em; line-height: 1.1; }
   .setup h1 span { color: var(--red); }
+  .setup p { color: var(--text-dim); max-width: 380px; font-size: 0.95rem; }
 
-  .setup p {
-    color: var(--text-dim);
-    max-width: 380px;
-    font-size: 0.95rem;
-  }
-
-  .input-group {
-    display: flex;
-    gap: 8px;
-    width: 100%;
-    max-width: 360px;
-  }
-
+  .input-group { display: flex; gap: 8px; width: 100%; max-width: 360px; }
   .input-group input {
-    flex: 1;
-    padding: 12px 16px;
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    color: var(--text);
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 1rem;
-    outline: none;
-    transition: border-color 0.2s;
+    flex: 1; padding: 12px 16px; background: var(--surface); border: 1px solid var(--border);
+    border-radius: 8px; color: var(--text); font-family: 'JetBrains Mono', monospace;
+    font-size: 1rem; outline: none; transition: border-color 0.2s;
   }
-
   .input-group input::placeholder { color: var(--text-faint); }
   .input-group input:focus { border-color: var(--accent); }
 
   .btn {
-    padding: 12px 24px;
-    background: var(--red);
-    border: none;
-    border-radius: 8px;
-    color: #fff;
-    font-family: 'Space Grotesk', sans-serif;
-    font-weight: 600;
-    font-size: 0.95rem;
-    cursor: pointer;
-    transition: opacity 0.2s;
-    white-space: nowrap;
+    padding: 12px 24px; background: var(--red); border: none; border-radius: 8px; color: #fff;
+    font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: 0.95rem;
+    cursor: pointer; transition: opacity 0.2s; white-space: nowrap;
   }
-
   .btn:hover { opacity: 0.88; }
   .btn:disabled { opacity: 0.4; cursor: not-allowed; }
 
-  .setup-hint {
-    color: var(--text-faint);
-    font-size: 0.82rem;
-    max-width: 360px;
-    line-height: 1.5;
-  }
+  .setup-hint { color: var(--text-faint); font-size: 0.82rem; max-width: 360px; line-height: 1.5; }
 
   /* --- Loading --- */
-  .loading-screen {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    min-height: 100vh;
-    gap: 20px;
-  }
-
-  .spinner {
-    width: 36px; height: 36px;
-    border: 3px solid var(--border);
-    border-top-color: var(--red);
-    border-radius: 50%;
-    animation: spin 0.8s linear infinite;
-  }
-
+  .loading-screen { display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100vh; gap: 20px; }
+  .spinner { width: 36px; height: 36px; border: 3px solid var(--border); border-top-color: var(--red); border-radius: 50%; animation: spin 0.8s linear infinite; }
   @keyframes spin { to { transform: rotate(360deg); } }
-
+  @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: .25; } }
   .loading-screen p { color: var(--text-dim); font-size: 0.95rem; }
 
   /* --- Header --- */
-  header {
-    padding: 40px 0 0;
-    margin-bottom: 40px;
-  }
-
-  .header-top {
-    display: flex;
-    align-items: baseline;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    gap: 12px;
-    margin-bottom: 8px;
-  }
-
-  header h1 {
-    font-size: 1.6rem;
-    font-weight: 700;
-    letter-spacing: -0.02em;
-  }
-
+  header { padding: 40px 0 0; margin-bottom: 40px; }
+  .header-top { display: flex; align-items: baseline; justify-content: space-between; flex-wrap: wrap; gap: 12px; margin-bottom: 8px; }
+  header h1 { font-size: 1.6rem; font-weight: 700; letter-spacing: -0.02em; }
   header h1 span { color: var(--red); }
+  .league-name { color: var(--text-dim); font-size: 0.9rem; }
+  .header-actions { display: flex; gap: 8px; align-items: center; }
 
-  .league-name {
-    color: var(--text-dim);
-    font-size: 0.9rem;
-  }
-
-  .change-league {
-    background: none;
-    border: 1px solid var(--border);
-    border-radius: 6px;
-    color: var(--text-dim);
-    font-family: 'Space Grotesk', sans-serif;
-    font-size: 0.8rem;
-    padding: 6px 12px;
-    cursor: pointer;
+  .change-league, .refresh-btn {
+    background: none; border: 1px solid var(--border); border-radius: 6px; color: var(--text-dim);
+    font-family: 'Space Grotesk', sans-serif; font-size: 0.8rem; padding: 6px 12px; cursor: pointer;
     transition: border-color 0.2s, color 0.2s;
   }
-
-  .change-league:hover { border-color: var(--text-dim); color: var(--text); }
+  .change-league:hover, .refresh-btn:hover { border-color: var(--text-dim); color: var(--text); }
+  .refresh-btn.busy { opacity: .5; cursor: wait; }
 
   /* --- Stats Bar --- */
-  .stats-bar {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-    gap: 12px;
-    margin-bottom: 40px;
-  }
-
-  .stat-card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    padding: 16px 18px;
-  }
-
-  .stat-card .label {
-    font-size: 0.78rem;
-    color: var(--text-dim);
-    margin-bottom: 4px;
-  }
-
-  .stat-card .value {
-    font-size: 1.5rem;
-    font-weight: 700;
-    letter-spacing: -0.02em;
-  }
-
+  .stats-bar { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 12px; margin-bottom: 40px; }
+  .stat-card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 16px 18px; }
+  .stat-card .label { font-size: 0.78rem; color: var(--text-dim); margin-bottom: 4px; display: flex; align-items: center; gap: 6px; }
+  .stat-card .value { font-size: 1.5rem; font-weight: 700; letter-spacing: -0.02em; }
   .stat-card .value.alive { color: var(--green); }
   .stat-card .value.dead { color: var(--red); }
   .stat-card .value.gw { color: var(--accent); }
 
-  /* --- Section --- */
-  .section-title {
-    font-size: 1.15rem;
-    font-weight: 600;
-    margin-bottom: 16px;
-    letter-spacing: -0.01em;
+  .live-badge {
+    display: inline-flex; align-items: center; gap: 5px; font-size: 0.68rem; font-weight: 700;
+    letter-spacing: .06em; text-transform: uppercase; color: var(--green);
   }
+  .live-badge::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--green); animation: pulse 1.4s infinite; }
+
+  .section-title { font-size: 1.15rem; font-weight: 600; margin-bottom: 16px; letter-spacing: -0.01em; display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+  .section-title .sub { font-size: 0.8rem; color: var(--text-faint); font-weight: 400; }
 
   /* --- Danger Zone --- */
   .danger-zone {
-    background: var(--red-dim);
-    border: 1px solid var(--red-glow);
-    border-radius: 10px;
-    padding: 16px 20px;
-    margin-bottom: 40px;
-    display: flex;
-    align-items: center;
-    gap: 14px;
+    background: var(--red-dim); border: 1px solid var(--red-glow); border-radius: 10px;
+    padding: 16px 20px; margin-bottom: 40px;
   }
-
+  .danger-head { display: flex; align-items: center; gap: 14px; }
   .danger-zone .skull { font-size: 1.4rem; }
-
-  .danger-zone .info {
-    flex: 1;
-  }
-
-  .danger-zone .info .title {
-    font-weight: 600;
-    font-size: 0.92rem;
-    color: var(--red);
-    margin-bottom: 2px;
-  }
-
-  .danger-zone .info .detail {
-    font-size: 0.85rem;
-    color: var(--text-dim);
-  }
-
-  .danger-zone .info .detail strong {
-    color: var(--text);
-    font-weight: 600;
-  }
+  .danger-zone .info { flex: 1; min-width: 0; }
+  .danger-zone .info .title { font-weight: 600; font-size: 0.92rem; color: var(--red); margin-bottom: 2px; }
+  .danger-zone .info .detail { font-size: 0.85rem; color: var(--text-dim); }
+  .danger-zone .info .detail strong { color: var(--text); font-weight: 600; }
+  .danger-list { margin-top: 14px; display: grid; gap: 6px; }
+  .danger-row { display: flex; align-items: center; gap: 10px; font-size: 0.85rem; }
+  .danger-row .pos { width: 20px; color: var(--text-faint); font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; }
+  .danger-row .nm { flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .danger-row .pts { font-family: 'JetBrains Mono', monospace; font-weight: 600; }
+  .danger-row.worst .nm, .danger-row.worst .pts { color: var(--red); }
+  .danger-row .flag { font-size: 0.7rem; color: var(--text-faint); }
+  .danger-note { margin-top: 12px; font-size: 0.75rem; color: var(--text-faint); line-height: 1.45; }
 
   /* --- Table --- */
-  .table-wrap {
-    overflow-x: auto;
-    margin-bottom: 48px;
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    background: var(--surface);
-  }
-
-  table {
-    width: 100%;
-    border-collapse: collapse;
-    font-size: 0.88rem;
-  }
-
+  .table-wrap { overflow-x: auto; margin-bottom: 48px; border: 1px solid var(--border); border-radius: 10px; background: var(--surface); }
+  table { width: 100%; border-collapse: collapse; font-size: 0.88rem; }
   thead th {
-    text-align: left;
-    padding: 12px 14px;
-    font-weight: 600;
-    color: var(--text-dim);
-    font-size: 0.78rem;
-    letter-spacing: 0.02em;
-    border-bottom: 1px solid var(--border);
-    position: sticky;
-    top: 0;
-    background: var(--surface);
-    white-space: nowrap;
+    text-align: left; padding: 12px 14px; font-weight: 600; color: var(--text-dim); font-size: 0.78rem;
+    letter-spacing: 0.02em; border-bottom: 1px solid var(--border); position: sticky; top: 0;
+    background: var(--surface); white-space: nowrap;
   }
-
   thead th.gw-col { text-align: center; min-width: 56px; }
-
+  thead th.live-col { color: var(--green); }
   tbody tr { border-bottom: 1px solid var(--border); }
   tbody tr:last-child { border-bottom: none; }
+  tbody td { padding: 10px 14px; white-space: nowrap; vertical-align: middle; }
 
-  tbody td {
-    padding: 10px 14px;
-    white-space: nowrap;
-    vertical-align: middle;
-  }
-
-  .manager-cell {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    min-width: 160px;
-  }
-
-  .status-dot {
-    width: 8px; height: 8px;
-    border-radius: 50%;
-    flex-shrink: 0;
-  }
-
+  .manager-cell { display: flex; align-items: center; gap: 10px; min-width: 160px; }
+  .status-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
   .status-dot.alive { background: var(--green); box-shadow: 0 0 6px var(--green); }
   .status-dot.eliminated { background: var(--red); box-shadow: 0 0 6px var(--red); }
-
-  .manager-name {
-    font-weight: 500;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-
+  .manager-name { font-weight: 500; overflow: hidden; text-overflow: ellipsis; }
   .manager-name.eliminated { color: var(--text-faint); text-decoration: line-through; }
 
-  td.gw-score {
-    text-align: center;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.82rem;
-  }
-
-  td.gw-score.elim-week {
-    background: var(--red-dim);
-    color: var(--red);
-    font-weight: 700;
-    position: relative;
-  }
-
-  td.gw-score.lowest-active {
-    background: var(--amber-dim);
-    color: var(--amber);
-  }
-
-  td.gw-score.post-elim {
-    color: var(--text-faint);
-    opacity: 0.35;
-  }
-
-  td.gw-score.top-score {
-    color: var(--green);
-  }
+  td.gw-score { text-align: center; font-family: 'JetBrains Mono', monospace; font-size: 0.82rem; }
+  td.gw-score.elim-week { background: var(--red-dim); color: var(--red); font-weight: 700; }
+  td.gw-score.lowest-active { background: var(--amber-dim); color: var(--amber); font-weight: 700; }
+  td.gw-score.danger-live { background: var(--red-dim); color: var(--red); font-weight: 700; }
+  td.gw-score.post-elim { color: var(--text-faint); opacity: 0.35; }
+  td.gw-score.top-score { color: var(--green); }
+  td.gw-score.live-cell { border-left: 1px solid var(--border); }
+  td.gw-score .sub-mark { font-size: 0.65rem; color: var(--accent); margin-left: 3px; }
 
   /* --- Graveyard --- */
-  .graveyard {
-    margin-bottom: 60px;
-  }
-
-  .tombstones {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    gap: 12px;
-  }
-
-  .tombstone {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    padding: 20px 18px;
-    text-align: center;
-    position: relative;
-    overflow: hidden;
-  }
-
-  .tombstone::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; right: 0;
-    height: 3px;
-    background: var(--red);
-    opacity: 0.6;
-  }
-
-  .tombstone .rip {
-    font-size: 1.6rem;
-    margin-bottom: 8px;
-  }
-
-  .tombstone .name {
-    font-weight: 600;
-    font-size: 0.95rem;
-    margin-bottom: 4px;
-  }
-
-  .tombstone .cause {
-    color: var(--text-dim);
-    font-size: 0.8rem;
-    line-height: 1.45;
-  }
-
-  .tombstone .cause strong {
-    color: var(--red);
-    font-weight: 600;
-  }
+  .graveyard { margin-bottom: 60px; }
+  .tombstones { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 12px; }
+  .tombstone { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 20px 18px; text-align: center; position: relative; overflow: hidden; }
+  .tombstone::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: var(--red); opacity: 0.6; }
+  .tombstone .rip { font-size: 1.6rem; margin-bottom: 8px; }
+  .tombstone .name { font-weight: 600; font-size: 0.95rem; margin-bottom: 4px; }
+  .tombstone .cause { color: var(--text-dim); font-size: 0.8rem; line-height: 1.45; }
+  .tombstone .cause strong { color: var(--red); font-weight: 600; }
 
   /* --- Winner --- */
-  .winner-banner {
-    background: var(--green-dim);
-    border: 1px solid var(--green);
-    border-radius: 10px;
-    padding: 24px;
-    text-align: center;
-    margin-bottom: 40px;
-  }
-
+  .winner-banner { background: var(--green-dim); border: 1px solid var(--green); border-radius: 10px; padding: 24px; text-align: center; margin-bottom: 40px; }
   .winner-banner .trophy { font-size: 2rem; margin-bottom: 8px; }
+  .winner-banner .title { font-size: 1.2rem; font-weight: 700; color: var(--green); margin-bottom: 4px; }
+  .winner-banner .subtitle { color: var(--text-dim); font-size: 0.9rem; }
 
-  .winner-banner .title {
-    font-size: 1.2rem;
-    font-weight: 700;
-    color: var(--green);
-    margin-bottom: 4px;
-  }
+  footer { padding: 32px 0; text-align: center; color: var(--text-faint); font-size: 0.78rem; border-top: 1px solid var(--border); }
 
-  .winner-banner .subtitle {
-    color: var(--text-dim);
-    font-size: 0.9rem;
-  }
+  .error-msg { background: var(--red-dim); border: 1px solid var(--red-glow); color: var(--red); border-radius: 8px; padding: 14px 18px; font-size: 0.9rem; margin-top: 16px; max-width: 360px; text-align: left; }
 
-  /* --- Footer --- */
-  footer {
-    padding: 32px 0;
-    text-align: center;
-    color: var(--text-faint);
-    font-size: 0.78rem;
-    border-top: 1px solid var(--border);
-  }
-
-  /* --- Error --- */
-  .error-msg {
-    background: var(--red-dim);
-    border: 1px solid var(--red-glow);
-    color: var(--red);
-    border-radius: 8px;
-    padding: 14px 18px;
-    font-size: 0.9rem;
-    margin-top: 16px;
-    max-width: 360px;
-    text-align: left;
-  }
-
-  /* --- Responsive --- */
   @media (max-width: 600px) {
     .setup h1 { font-size: 1.8rem; }
     header h1 { font-size: 1.3rem; }
@@ -489,7 +222,10 @@
     <header>
       <div class="header-top">
         <h1>FPL <span>Eliminator</span></h1>
-        <button class="change-league" onclick="resetApp()">Change league</button>
+        <div class="header-actions">
+          <button class="refresh-btn" id="refreshBtn" onclick="refreshLive()" style="display:none;">Refresh live</button>
+          <button class="change-league" onclick="resetApp()">Change league</button>
+        </div>
       </div>
       <div class="league-name" id="leagueName"></div>
     </header>
@@ -498,19 +234,18 @@
     <div id="winnerBanner"></div>
     <div id="dangerZone"></div>
 
-    <div class="section-title">Gameweek Scores</div>
+    <div class="section-title">Gameweek Scores <span class="sub" id="tableSub"></span></div>
     <div class="table-wrap" id="tableWrap"></div>
 
     <div class="graveyard" id="graveyard"></div>
 
     <footer>
-      Data from the Fantasy Premier League API · Refreshes on page load
+      Data from the Fantasy Premier League API · <span id="footerNote">Refreshes on page load</span>
     </footer>
   </div>
 </div>
 
 <script>
-// Multi-proxy — same setup as the working Draft app
 const FPL_API = 'https://fantasy.premierleague.com/api';
 const PROXY_FNS = [
   u => 'https://fplproxy.hfj4rnnt7g.workers.dev/' + u,
@@ -521,14 +256,26 @@ const PROXY_FNS = [
 ];
 let px = null;
 
+const LIVE_REFRESH_MS = 120000; // auto-refresh live scores every 2 min
+
 // --- State ---
 let leagueId = null;
 let bootstrapData = null;
+let elementById = {};
 let managers = [];
 let managerHistories = {};
 let eliminations = {}; // { managerId: { gw, score } }
 let completedGWs = [];
 let currentGW = 0;
+
+// Live state
+let liveGW = null;          // gameweek currently in progress (or null)
+let liveElements = {};      // elementId -> { minutes, total_points }
+let liveFixtures = [];      // fixtures for liveGW
+let livePicks = {};         // managerId -> picks payload
+let liveScores = {};        // managerId -> calcLiveScore() result
+let liveTimer = null;
+let lastLiveRefresh = null;
 
 // --- Init ---
 (function init() {
@@ -544,6 +291,7 @@ let currentGW = 0;
 })();
 
 function resetApp() {
+  stopLiveTimer();
   document.getElementById('app').style.display = 'none';
   document.getElementById('setup').style.display = 'flex';
   window.history.replaceState({}, '', window.location.pathname);
@@ -560,20 +308,29 @@ async function loadLeague() {
   document.getElementById('setup').style.display = 'none';
   document.getElementById('loading').style.display = 'flex';
   document.getElementById('setupError').innerHTML = '';
+  stopLiveTimer();
 
   try {
-    // Update URL
     window.history.replaceState({}, '', `?leagueId=${leagueId}`);
 
     // 1. Bootstrap
     setLoadingMsg('Fetching FPL season data…');
     bootstrapData = await fetchJSON('/bootstrap-static/');
+    elementById = {};
+    (bootstrapData.elements || []).forEach(el => { elementById[el.id] = el; });
+
     const events = bootstrapData.events;
     completedGWs = events.filter(e => e.finished).map(e => e.id);
     const currentEvent = events.find(e => e.is_current);
     currentGW = currentEvent ? currentEvent.id : (completedGWs.length > 0 ? completedGWs[completedGWs.length - 1] : 0);
 
-    // 2. League standings (paginated)
+    // A GW is "live" if it's current, not finished, and its deadline has passed
+    liveGW = null;
+    if (currentEvent && !currentEvent.finished && new Date(currentEvent.deadline_time) <= new Date()) {
+      liveGW = currentEvent.id;
+    }
+
+    // 2. League standings
     setLoadingMsg('Loading league managers…');
     managers = await fetchAllLeagueManagers(leagueId);
     if (managers.length < 2) throw new Error('Need at least 2 managers in the league.');
@@ -582,11 +339,17 @@ async function loadLeague() {
     setLoadingMsg(`Loading scores for ${managers.length} managers…`);
     await fetchAllHistories(managers);
 
-    // 4. Calculate eliminations
+    // 4. Eliminations from completed GWs
     calculateEliminations();
 
-    // 5. Render
+    // 5. Live data for the in-progress GW
+    if (liveGW) {
+      await loadLiveData(true);
+    }
+
+    // 6. Render
     renderApp();
+    if (liveGW) startLiveTimer();
 
   } catch (err) {
     console.error(err);
@@ -596,13 +359,8 @@ async function loadLeague() {
   }
 }
 
-function setLoadingMsg(msg) {
-  document.getElementById('loadingMsg').textContent = msg;
-}
-
-function showSetupError(msg) {
-  document.getElementById('setupError').innerHTML = `<div class="error-msg">${msg}</div>`;
-}
+function setLoadingMsg(msg) { document.getElementById('loadingMsg').textContent = msg; }
+function showSetupError(msg) { document.getElementById('setupError').innerHTML = `<div class="error-msg">${msg}</div>`; }
 
 // --- API Helpers ---
 async function fetchJSON(path) {
@@ -617,6 +375,7 @@ async function fetchJSON(path) {
     try {
       const r = await fetch(PROXY_FNS[i](url), { signal: AbortSignal.timeout(12000) });
       if (r.ok) { px = i; console.log('Using proxy #' + i); return r.json(); }
+      console.log('Proxy #' + i + ' returned ' + r.status);
     } catch (e) { continue; }
   }
   throw new Error('All proxies failed for ' + path);
@@ -645,26 +404,180 @@ async function fetchAllLeagueManagers(leagueId) {
 }
 
 async function fetchAllHistories(managers) {
-  // Fetch in batches of 5 to avoid hammering the API
   const batchSize = 5;
   for (let i = 0; i < managers.length; i += batchSize) {
     const batch = managers.slice(i, i + batchSize);
-    const promises = batch.map(m =>
-      fetchJSON(`/entry/${m.id}/history/`)
-        .then(data => { managerHistories[m.id] = data; })
-    );
-    await Promise.all(promises);
+    await Promise.all(batch.map(m =>
+      fetchJSON(`/entry/${m.id}/history/`).then(data => { managerHistories[m.id] = data; })
+    ));
     setLoadingMsg(`Loaded ${Math.min(i + batchSize, managers.length)} of ${managers.length} managers…`);
   }
 }
 
-// --- Elimination Logic ---
+// --- Live Data ---
+async function loadLiveData(initial) {
+  const alive = managers.filter(m => !eliminations[m.id]);
+
+  if (initial) setLoadingMsg(`Fetching live GW${liveGW} data…`);
+  const [liveRes, fixtures] = await Promise.all([
+    fetchJSON(`/event/${liveGW}/live/`),
+    fetchJSON(`/fixtures/?event=${liveGW}`)
+  ]);
+  liveElements = {};
+  (liveRes.elements || []).forEach(el => { liveElements[el.id] = el.stats || {}; });
+  liveFixtures = fixtures || [];
+
+  // Picks only need fetching once (they're locked after the deadline)
+  const need = alive.filter(m => !livePicks[m.id]);
+  const batchSize = 5;
+  for (let i = 0; i < need.length; i += batchSize) {
+    const batch = need.slice(i, i + batchSize);
+    await Promise.all(batch.map(m =>
+      fetchJSON(`/entry/${m.id}/event/${liveGW}/picks/`)
+        .then(d => { livePicks[m.id] = d; })
+        .catch(e => { console.warn('No picks for', m.id, e); })
+    ));
+    if (initial) setLoadingMsg(`Loaded live picks ${Math.min(i + batchSize, need.length)} of ${need.length}…`);
+  }
+
+  liveScores = {};
+  alive.forEach(m => {
+    const p = livePicks[m.id];
+    liveScores[m.id] = p ? calcLiveScore(p) : null;
+  });
+  lastLiveRefresh = new Date();
+}
+
+async function refreshLive() {
+  if (!liveGW) return;
+  const btn = document.getElementById('refreshBtn');
+  btn.classList.add('busy'); btn.textContent = 'Refreshing…';
+  try {
+    await loadLiveData(false);
+    renderApp();
+  } catch (e) {
+    console.error(e);
+  } finally {
+    btn.classList.remove('busy');
+    btn.textContent = 'Refresh live';
+  }
+}
+
+function startLiveTimer() {
+  stopLiveTimer();
+  liveTimer = setInterval(refreshLive, LIVE_REFRESH_MS);
+}
+function stopLiveTimer() { if (liveTimer) { clearInterval(liveTimer); liveTimer = null; } }
+
+// --- Auto-sub engine (classic FPL rules) ---
+// A starter is replaced by a bench player only when:
+//   - the starter has 0 minutes AND every fixture for their team this GW has finished
+//   - the bench player has played (>0 mins) — or their team hasn't finished, in which case we
+//     keep the starter's 0 for now (the sub will apply once the bench player's match is done)
+//   - GK can only replace GK; outfield replacement must keep a legal formation (1-3-2-1 minimum)
+// Bench order is respected. Bench Boost counts all 15. Captain 0 mins + finished -> VC gets armband.
+function calcLiveScore(pickData) {
+  const picks = pickData.picks || [];
+  const chip = pickData.active_chip;
+  const hits = pickData.entry_history?.event_transfers_cost || 0;
+
+  // Which teams have finished all their fixtures this GW?
+  const teamFixtures = {};
+  liveFixtures.forEach(f => {
+    (teamFixtures[f.team_h] = teamFixtures[f.team_h] || []).push(f);
+    (teamFixtures[f.team_a] = teamFixtures[f.team_a] || []).push(f);
+  });
+  const teamDone = team => {
+    const fs = teamFixtures[team] || [];
+    return fs.length === 0 || fs.every(f => f.finished || f.finished_provisional);
+  };
+  const teamStarted = team => (teamFixtures[team] || []).some(f => f.started);
+
+  const info = p => {
+    const el = elementById[p.element] || {};
+    const lv = liveElements[p.element] || {};
+    const team = el.team || 0;
+    return {
+      ...p,
+      type: el.element_type || 0,
+      team,
+      mins: lv.minutes || 0,
+      pts: lv.total_points || 0,
+      name: el.web_name || '?',
+      done: teamDone(team),
+      started: teamStarted(team),
+      subIn: false, subOut: false
+    };
+  };
+
+  const st = picks.filter(p => p.position <= 11).map(info);
+  const bn = picks.filter(p => p.position > 11).sort((a, b) => a.position - b.position).map(info);
+
+  const usedB = new Set(), outS = new Set();
+
+  if (chip !== 'bboost') {
+    for (let si = 0; si < st.length; si++) {
+      const s = st[si];
+      if (s.mins > 0) continue;       // played (or still playing)
+      if (!s.done) continue;          // team not finished yet — don't sub
+      for (let bi = 0; bi < bn.length; bi++) {
+        const b = bn[bi];
+        if (usedB.has(bi)) continue;
+        if (b.mins === 0) {
+          // Bench player hasn't played. If their team is finished they're useless; skip.
+          // If their team hasn't finished, FPL would still try them first, so stop looking further
+          // down the bench (they might play). Keep starter's 0 for now.
+          if (b.done) continue; else break;
+        }
+        if ((s.type === 1) !== (b.type === 1)) continue; // GK <-> GK only
+        // Check formation with this swap
+        const team = [];
+        st.forEach((x, i) => { if (i !== si && !outS.has(i)) team.push(x); });
+        usedB.forEach(i => team.push(bn[i]));
+        team.push(b);
+        const c = { 1: 0, 2: 0, 3: 0, 4: 0 };
+        team.forEach(p => { c[p.type] = (c[p.type] || 0) + 1; });
+        if (c[1] >= 1 && c[2] >= 3 && c[3] >= 2 && c[4] >= 1) {
+          s.subOut = true; b.subIn = true; outS.add(si); usedB.add(bi); break;
+        }
+      }
+    }
+  }
+
+  // Captaincy
+  const capMult = chip === '3xc' ? 3 : 2;
+  const all = [...st, ...bn];
+  const cap = all.find(p => p.is_captain);
+  const vc = all.find(p => p.is_vice_captain);
+  let armband = cap;
+  if (cap && cap.mins === 0 && cap.done) armband = (vc && !(vc.mins === 0 && vc.done)) ? vc : null;
+
+  // Sum
+  const counted = [];
+  st.forEach((s, i) => { if (!outS.has(i)) counted.push(s); });
+  usedB.forEach(i => counted.push(bn[i]));
+  if (chip === 'bboost') bn.forEach(b => counted.push(b));
+
+  let total = 0;
+  counted.forEach(p => {
+    const mult = (armband && p.element === armband.element) ? capMult : 1;
+    total += p.pts * mult;
+  });
+  total -= hits;
+
+  const subs = bn.filter(b => b.subIn).map(b => b.name);
+  const played = counted.filter(p => p.mins > 0 || p.done).length;
+  const allDone = counted.every(p => p.done);
+
+  return { total, hits, chip, subs, played, allDone, starters: st, bench: bn };
+}
+
+// --- Elimination Logic (completed GWs) ---
 function calculateEliminations() {
   eliminations = {};
   const eliminated = new Set();
 
   for (const gw of completedGWs) {
-    // Get scores for alive managers this GW
     const scores = [];
     for (const m of managers) {
       if (eliminated.has(m.id)) continue;
@@ -672,21 +585,13 @@ function calculateEliminations() {
       if (!hist) continue;
       const gwData = hist.current.find(h => h.event === gw);
       if (!gwData) continue;
-      scores.push({
-        id: m.id,
-        points: gwData.points,
-        overallRank: gwData.overall_rank
-      });
+      scores.push({ id: m.id, points: gwData.points, overallRank: gwData.overall_rank });
     }
-
-    if (scores.length <= 1) break; // Don't eliminate the last person
-
-    // Sort: lowest points first, then worst overall rank (highest number)
+    if (scores.length <= 1) break;
     scores.sort((a, b) => {
       if (a.points !== b.points) return a.points - b.points;
       return (b.overallRank || Infinity) - (a.overallRank || Infinity);
     });
-
     const loser = scores[0];
     eliminations[loser.id] = { gw, score: loser.points };
     eliminated.add(loser.id);
@@ -700,6 +605,19 @@ function getManagerGWScore(managerId, gw) {
   return gwData ? gwData.points : null;
 }
 
+// Live ranking of survivors: lowest first (tiebreak: worse overall rank)
+function liveRanking(alive) {
+  return alive
+    .map(m => ({ m, s: liveScores[m.id] }))
+    .filter(x => x.s)
+    .sort((a, b) => {
+      if (a.s.total !== b.s.total) return a.s.total - b.s.total;
+      const ra = livePicks[a.m.id]?.entry_history?.overall_rank || Infinity;
+      const rb = livePicks[b.m.id]?.entry_history?.overall_rank || Infinity;
+      return rb - ra;
+    });
+}
+
 // --- Rendering ---
 function renderApp() {
   document.getElementById('loading').style.display = 'none';
@@ -707,34 +625,29 @@ function renderApp() {
 
   const alive = managers.filter(m => !eliminations[m.id]);
   const dead = managers.filter(m => eliminations[m.id]);
-  const gwsToShow = completedGWs.length > 0 ? completedGWs : [];
   const isComplete = alive.length === 1 && dead.length > 0;
+  const showLive = !!liveGW && alive.length > 1 && !isComplete;
 
-  renderStats(alive.length, dead.length, currentGW, isComplete);
+  document.getElementById('refreshBtn').style.display = showLive ? '' : 'none';
+  document.getElementById('footerNote').textContent = showLive
+    ? `Live scores auto-refresh every ${LIVE_REFRESH_MS / 60000} min · last update ${lastLiveRefresh ? lastLiveRefresh.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : '—'}`
+    : 'Refreshes on page load';
+
+  renderStats(alive.length, dead.length, isComplete, showLive);
   renderWinner(alive, isComplete);
-  renderDangerZone(alive, gwsToShow);
-  renderTable(gwsToShow, alive, dead);
+  renderDangerZone(alive, showLive);
+  renderTable(completedGWs, alive, dead, showLive);
   renderGraveyard(dead);
 }
 
-function renderStats(aliveCount, deadCount, gw, isComplete) {
+function renderStats(aliveCount, deadCount, isComplete, showLive) {
+  const gwLabel = isComplete ? 'Final gameweek' : (showLive ? `Gameweek <span class="live-badge">Live</span>` : 'Current gameweek');
+  const gwVal = showLive ? liveGW : currentGW;
   document.getElementById('statsBar').innerHTML = `
-    <div class="stat-card">
-      <div class="label">${isComplete ? 'Final gameweek' : 'Current gameweek'}</div>
-      <div class="value gw">${gw}</div>
-    </div>
-    <div class="stat-card">
-      <div class="label">Survivors</div>
-      <div class="value alive">${aliveCount}</div>
-    </div>
-    <div class="stat-card">
-      <div class="label">Eliminated</div>
-      <div class="value dead">${deadCount}</div>
-    </div>
-    <div class="stat-card">
-      <div class="label">Total managers</div>
-      <div class="value">${managers.length}</div>
-    </div>
+    <div class="stat-card"><div class="label">${gwLabel}</div><div class="value gw">${gwVal}</div></div>
+    <div class="stat-card"><div class="label">Survivors</div><div class="value alive">${aliveCount}</div></div>
+    <div class="stat-card"><div class="label">Eliminated</div><div class="value dead">${deadCount}</div></div>
+    <div class="stat-card"><div class="label">Total managers</div><div class="value">${managers.length}</div></div>
   `;
 }
 
@@ -751,43 +664,85 @@ function renderWinner(alive, isComplete) {
   `;
 }
 
-function renderDangerZone(alive, gwsToShow) {
+function renderDangerZone(alive, showLive) {
   const container = document.getElementById('dangerZone');
-  if (alive.length <= 1 || gwsToShow.length === 0) { container.innerHTML = ''; return; }
+  if (!showLive) { container.innerHTML = ''; return; }
 
-  // Check if the current GW is in-progress (not finished yet)
-  const lastCompletedGW = completedGWs[completedGWs.length - 1];
-  const currentEvent = bootstrapData.events.find(e => e.is_current);
-  const isLive = currentEvent && !currentEvent.finished;
+  const ranked = liveRanking(alive);
+  if (ranked.length === 0) { container.innerHTML = ''; return; }
 
-  if (!isLive) { container.innerHTML = ''; return; }
+  const worst = ranked[0];
+  const next = ranked[1];
+  const gap = next ? next.s.total - worst.s.total : 0;
+  const bottom = ranked.slice(0, Math.min(5, ranked.length));
 
-  // We can't show live danger zone without live data, so just show last completed GW lowest
-  container.innerHTML = '';
+  const rows = bottom.map((x, i) => {
+    const flags = [];
+    if (x.s.subs.length) flags.push('auto-sub: ' + x.s.subs.join(', '));
+    if (x.s.hits) flags.push(`-${x.s.hits} hit`);
+    if (x.s.chip) flags.push(chipName(x.s.chip));
+    if (!x.s.allDone) flags.push(`${x.s.played}/${x.s.chip === 'bboost' ? 15 : 11} done`);
+    return `<div class="danger-row ${i === 0 ? 'worst' : ''}">
+      <span class="pos">${i + 1}</span>
+      <span class="nm">${escHTML(x.m.teamName)}</span>
+      <span class="flag">${escHTML(flags.join(' · '))}</span>
+      <span class="pts">${x.s.total}</span>
+    </div>`;
+  }).join('');
+
+  container.innerHTML = `
+    <div class="danger-zone">
+      <div class="danger-head">
+        <div class="skull">☠</div>
+        <div class="info">
+          <div class="title">Danger zone — GW${liveGW} live</div>
+          <div class="detail">
+            <strong>${escHTML(worst.m.teamName)}</strong> is currently bottom on <strong>${worst.s.total} pts</strong>${next ? `, ${gap === 0 ? 'level with' : gap + ' behind'} ${escHTML(next.m.teamName)}` : ''}.
+          </div>
+        </div>
+      </div>
+      <div class="danger-list">${rows}</div>
+      <div class="danger-note">
+        Live totals include captain/vice-captain, chips, transfer hits and projected auto-subs.
+        A bench player is only brought in once the starter's team has finished playing, matching how FPL applies subs at the end of the gameweek.
+        ${gap === 0 && next ? 'Ties are broken by overall rank (worse rank goes out).' : ''}
+      </div>
+    </div>
+  `;
 }
 
-function renderTable(gwsToShow, alive, dead) {
-  if (gwsToShow.length === 0) {
+function chipName(c) {
+  return { bboost: 'Bench Boost', '3xc': 'Triple Captain', freehit: 'Free Hit', wildcard: 'Wildcard' }[c] || c;
+}
+
+function renderTable(gwsToShow, alive, dead, showLive) {
+  if (gwsToShow.length === 0 && !showLive) {
     document.getElementById('tableWrap').innerHTML = '<p style="padding:20px;color:var(--text-dim);">No completed gameweeks yet.</p>';
+    document.getElementById('tableSub').textContent = '';
     return;
   }
+  document.getElementById('tableSub').textContent = showLive ? `GW${liveGW} column is live and provisional` : '';
 
-  // Sort: alive first (by total desc), then dead (by elimination GW desc)
+  // Survivors: sort by live score (best first) when live, else by total
+  let aliveSorted;
+  if (showLive) {
+    const ranked = liveRanking(alive).reverse();
+    const withScore = ranked.map(x => x.m);
+    const without = alive.filter(m => !liveScores[m.id]);
+    aliveSorted = [...withScore, ...without];
+  } else {
+    aliveSorted = [...alive].sort((a, b) => b.total - a.total);
+  }
   const sorted = [
-    ...alive.sort((a, b) => b.total - a.total),
-    ...dead.sort((a, b) => eliminations[b.id].gw - eliminations[a.id].gw)
+    ...aliveSorted,
+    ...[...dead].sort((a, b) => eliminations[b.id].gw - eliminations[a.id].gw)
   ];
 
-  // Find top & bottom scorer per GW among alive-at-the-time managers
-  const gwTopScore = {};
-  const gwBottomScore = {};
+  // Top score per completed GW among managers alive at the time
+  const gwTopScore = {}, gwBottomScore = {};
   for (const gw of gwsToShow) {
     let top = -Infinity, bottom = Infinity;
-    const eliminatedBefore = new Set(
-      Object.entries(eliminations)
-        .filter(([, v]) => v.gw < gw)
-        .map(([k]) => Number(k))
-    );
+    const eliminatedBefore = new Set(Object.entries(eliminations).filter(([, v]) => v.gw < gw).map(([k]) => Number(k)));
     for (const m of managers) {
       if (eliminatedBefore.has(m.id)) continue;
       const s = getManagerGWScore(m.id, gw);
@@ -795,11 +750,18 @@ function renderTable(gwsToShow, alive, dead) {
       if (s > top) top = s;
       if (s < bottom) bottom = s;
     }
-    gwTopScore[gw] = top;
-    gwBottomScore[gw] = bottom;
+    gwTopScore[gw] = top; gwBottomScore[gw] = bottom;
   }
 
-  const gwHeaders = gwsToShow.map(gw => `<th class="gw-col">GW${gw}</th>`).join('');
+  // Live top/bottom
+  let liveTop = -Infinity, liveBottomId = null;
+  if (showLive) {
+    const ranked = liveRanking(alive);
+    if (ranked.length) { liveBottomId = ranked[0].m.id; liveTop = ranked[ranked.length - 1].s.total; }
+  }
+
+  const gwHeaders = gwsToShow.map(gw => `<th class="gw-col">GW${gw}</th>`).join('')
+    + (showLive ? `<th class="gw-col live-col">GW${liveGW} ●</th>` : '');
 
   const rows = sorted.map(m => {
     const isEliminated = !!eliminations[m.id];
@@ -808,34 +770,43 @@ function renderTable(gwsToShow, alive, dead) {
     const cells = gwsToShow.map(gw => {
       const score = getManagerGWScore(m.id, gw);
       if (score === null) return `<td class="gw-score post-elim">—</td>`;
-
-      // Is this after they were eliminated?
-      if (isEliminated && gw > elimGW) {
-        return `<td class="gw-score post-elim">${score}</td>`;
-      }
-
-      // Is this the GW they got eliminated?
-      if (isEliminated && gw === elimGW) {
-        return `<td class="gw-score elim-week" title="Eliminated">☠ ${score}</td>`;
-      }
-
-      // Was this the top score for the GW?
+      if (isEliminated && gw > elimGW) return `<td class="gw-score post-elim">${score}</td>`;
+      if (isEliminated && gw === elimGW) return `<td class="gw-score elim-week" title="Eliminated">☠ ${score}</td>`;
       let cls = 'gw-score';
       if (score === gwTopScore[gw] && gwTopScore[gw] !== gwBottomScore[gw]) cls += ' top-score';
-
       return `<td class="${cls}">${score}</td>`;
     }).join('');
 
-    const statusClass = isEliminated ? 'eliminated' : 'alive';
+    let liveCell = '';
+    if (showLive) {
+      if (isEliminated) {
+        const s = getManagerGWScore(m.id, liveGW);
+        liveCell = `<td class="gw-score post-elim live-cell">${s === null ? '—' : s}</td>`;
+      } else {
+        const s = liveScores[m.id];
+        if (!s) liveCell = `<td class="gw-score post-elim live-cell">—</td>`;
+        else {
+          let cls = 'gw-score live-cell';
+          if (m.id === liveBottomId) cls += ' danger-live';
+          else if (s.total === liveTop) cls += ' top-score';
+          const tip = [
+            s.subs.length ? 'Auto-subs: ' + s.subs.join(', ') : '',
+            s.hits ? `Transfer hit: -${s.hits}` : '',
+            s.chip ? chipName(s.chip) : '',
+            `${s.played}/${s.chip === 'bboost' ? 15 : 11} players done`
+          ].filter(Boolean).join(' · ');
+          liveCell = `<td class="${cls}" title="${escHTML(tip)}">${s.total}${s.subs.length ? '<span class="sub-mark">↕</span>' : ''}</td>`;
+        }
+      }
+    }
 
+    const statusClass = isEliminated ? 'eliminated' : 'alive';
     return `<tr>
-      <td>
-        <div class="manager-cell">
-          <div class="status-dot ${statusClass}"></div>
-          <span class="manager-name ${statusClass}" title="${escHTML(m.name)}">${escHTML(m.teamName)}</span>
-        </div>
-      </td>
-      ${cells}
+      <td><div class="manager-cell">
+        <div class="status-dot ${statusClass}"></div>
+        <span class="manager-name ${statusClass}" title="${escHTML(m.name)}">${escHTML(m.teamName)}</span>
+      </div></td>
+      ${cells}${liveCell}
     </tr>`;
   }).join('');
 
@@ -850,33 +821,22 @@ function renderTable(gwsToShow, alive, dead) {
 function renderGraveyard(dead) {
   const container = document.getElementById('graveyard');
   if (dead.length === 0) { container.innerHTML = ''; return; }
-
-  // Sort by elimination order (earliest first)
   const sorted = [...dead].sort((a, b) => eliminations[a.id].gw - eliminations[b.id].gw);
-
-  const cards = sorted.map((m, i) => {
+  const cards = sorted.map(m => {
     const e = eliminations[m.id];
     return `
       <div class="tombstone">
         <div class="rip">🪦</div>
         <div class="name">${escHTML(m.teamName)}</div>
-        <div class="cause">
-          ${escHTML(m.name)}<br>
-          Eliminated <strong>GW${e.gw}</strong> with <strong>${e.score} pts</strong>
-        </div>
-      </div>
-    `;
+        <div class="cause">${escHTML(m.name)}<br>Eliminated <strong>GW${e.gw}</strong> with <strong>${e.score} pts</strong></div>
+      </div>`;
   }).join('');
-
-  container.innerHTML = `
-    <div class="section-title">Graveyard</div>
-    <div class="tombstones">${cards}</div>
-  `;
+  container.innerHTML = `<div class="section-title">Graveyard</div><div class="tombstones">${cards}</div>`;
 }
 
 function escHTML(str) {
   const d = document.createElement('div');
-  d.textContent = str;
+  d.textContent = str == null ? '' : String(str);
   return d.innerHTML;
 }
 </script>
