@@ -147,6 +147,11 @@
   tbody td { padding: 10px 14px; white-space: nowrap; vertical-align: middle; }
 
   .manager-cell { display: flex; align-items: center; gap: 10px; min-width: 160px; }
+  thead th:first-child, tbody td:first-child {
+    position: sticky; left: 0; z-index: 2; background: var(--surface);
+    box-shadow: 1px 0 0 var(--border);
+  }
+  thead th:first-child { z-index: 3; }
   .status-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
   .status-dot.alive { background: var(--green); box-shadow: 0 0 6px var(--green); }
   .status-dot.eliminated { background: var(--red); box-shadow: 0 0 6px var(--red); }
@@ -159,7 +164,7 @@
   td.gw-score.danger-live { background: var(--red-dim); color: var(--red); font-weight: 700; }
   td.gw-score.post-elim { color: var(--text-faint); opacity: 0.35; }
   td.gw-score.top-score { color: var(--green); }
-  td.gw-score.live-cell { border-left: 1px solid var(--border); }
+  td.gw-score.live-cell { border-right: 1px solid var(--border); }
   td.gw-score .sub-mark { font-size: 0.65rem; color: var(--accent); margin-left: 3px; }
 
   /* --- Graveyard --- */
@@ -760,14 +765,16 @@ function renderTable(gwsToShow, alive, dead, showLive) {
     if (ranked.length) { liveBottomId = ranked[0].m.id; liveTop = ranked[ranked.length - 1].s.total; }
   }
 
-  const gwHeaders = gwsToShow.map(gw => `<th class="gw-col">GW${gw}</th>`).join('')
-    + (showLive ? `<th class="gw-col live-col">GW${liveGW} ●</th>` : '');
+  // Most recent first: live column, then completed GWs newest -> oldest
+  const gwsDisplay = [...gwsToShow].reverse();
+  const gwHeaders = (showLive ? `<th class="gw-col live-col">GW${liveGW} ●</th>` : '')
+    + gwsDisplay.map(gw => `<th class="gw-col">GW${gw}</th>`).join('');
 
   const rows = sorted.map(m => {
     const isEliminated = !!eliminations[m.id];
     const elimGW = isEliminated ? eliminations[m.id].gw : null;
 
-    const cells = gwsToShow.map(gw => {
+    const cells = gwsDisplay.map(gw => {
       const score = getManagerGWScore(m.id, gw);
       if (score === null) return `<td class="gw-score post-elim">—</td>`;
       if (isEliminated && gw > elimGW) return `<td class="gw-score post-elim">${score}</td>`;
@@ -806,7 +813,7 @@ function renderTable(gwsToShow, alive, dead, showLive) {
         <div class="status-dot ${statusClass}"></div>
         <span class="manager-name ${statusClass}" title="${escHTML(m.name)}">${escHTML(m.teamName)}</span>
       </div></td>
-      ${cells}${liveCell}
+      ${liveCell}${cells}
     </tr>`;
   }).join('');
 
